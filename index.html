@@ -1,25 +1,443 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Margarida Vieira</title>
+    <title>Margarida Vieira — Design Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
+        * { box-sizing: border-box; }
+
+        :root {
+            --bg: #f8f8f6;
+            --text: #1a1a1a;
+            --text-dim: #6b6b6b;
+            --text-mono: #8b8b8b;
+            --accent: #c44545;
+            --border: #e8e8e5;
+            --card-bg: #ffffff;
+        }
+
         body {
             margin: 0;
-            height: 100vh;
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', -apple-system, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--bg);
+            border-bottom: 1px solid var(--border);
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 56px;
+        }
+
+        .nav-logo {
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .nav-logo span {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 28px;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text);
+        }
+
+        .nav-cta {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-cta:hover {
+            color: var(--accent);
+        }
+
+        /* Hero */
+        .hero {
+            padding: 100px 24px 60px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: clamp(28px, 4vw, 48px);
+            font-weight: 600;
+            line-height: 1.2;
+            margin: 0 0 16px;
+            max-width: 700px;
+        }
+
+        .hero h1 em {
+            font-style: italic;
+            font-family: 'Georgia', serif;
+            color: var(--accent);
+        }
+
+        .hero p {
+            font-size: 16px;
+            color: var(--text-dim);
+            max-width: 500px;
+            margin: 0;
+        }
+
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            font-family: 'DM Mono', monospace;
+            color: #3a8a5c;
+            margin-top: 20px;
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #3a8a5c;
+        }
+
+        /* Section title */
+        .section-title {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 24px 20px;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-mono);
+        }
+
+        /* Project Grid */
+        .grid {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px 80px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .project-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+
+        .project-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+        }
+
+        .project-card img {
+            width: 100%;
+            height: 340px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .project-info {
+            padding: 20px 24px;
+        }
+
+        .project-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+
+        .project-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .project-year {
+            font-size: 12px;
+            font-family: 'DM Mono', monospace;
+            color: var(--text-mono);
+        }
+
+        .project-tags {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .project-tag {
+            font-size: 10px;
+            font-family: 'DM Mono', monospace;
+            color: var(--text-mono);
+            background: var(--bg);
+            padding: 3px 8px;
+            border-radius: 4px;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+        }
+
+        .project-desc {
+            font-size: 13px;
+            color: var(--text-dim);
+            margin: 8px 0 0;
+            line-height: 1.5;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 32px 24px;
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        footer a {
+            color: var(--text-dim);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: var(--text);
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--text);
+            color: var(--bg);
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.3s;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, #1a1a2e, #16213e);
-            color: #e0e0e0;
-            font-family: 'Inter', -apple-system, sans-serif;
-            font-size: 4rem;
-            font-weight: 700;
+        }
+
+        .back-to-top.visible {
+            opacity: 0.8;
+        }
+
+        .back-to-top:hover {
+            opacity: 1;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .grid { grid-template-columns: 1fr; }
+            .project-card img { height: 240px; }
+            .nav-links { display: none; }
+            .hero { padding: 60px 24px 40px; }
         }
     </style>
 </head>
 <body>
-    Teste! ✨
+
+    <nav>
+        <a href="#" class="nav-logo">Margarida<span>.</span></a>
+        <div class="nav-links">
+            <a href="#work">Work</a>
+            <a href="#about">About</a>
+        </div>
+        <a href="mailto:margarida.c.m.vieira@gmail.com" class="nav-cta">Say Hello →</a>
+    </nav>
+
+    <section class="hero">
+        <h1>I'm Margarida, a designer exploring the intersection of <em>visual communication</em> and human experience.</h1>
+        <p>Currently studying at FBAUL — Faculdade de Belas-Artes da Universidade de Lisboa. Focused on editorial design, typography, and visual systems.</p>
+        <div class="status">
+            <span class="status-dot"></span>
+            Available for internships & junior roles
+        </div>
+    </section>
+
+    <div class="section-title" id="work">Selected Work</div>
+
+    <div class="grid">
+
+        <!-- Project 1: Out of Body: Out of Mind -->
+        <div class="project-card">
+            <img src="assets/p1-zine.png" alt="Out of Body: Out of Mind zine" loading="lazy">
+            <div class="project-info">
+                <div class="project-meta">
+                    <h3 class="project-title">Out of Body: Out of Mind</h3>
+                    <span class="project-year">2025</span>
+                </div>
+                <div class="project-tags">
+                    <span class="project-tag">Editorial</span>
+                    <span class="project-tag">Zine</span>
+                </div>
+                <p class="project-desc">
+                    An editorial project exploring the boundaries between physical and digital identity through a self-published zine and vinyl LP package.
+                </p>
+            </div>
+        </div>
+
+        <!-- Project 2: DIA D -->
+        <div class="project-card">
+            <img src="assets/p2-banner.png" alt="DIA D event design" loading="lazy">
+            <div class="project-info">
+                <div class="project-meta">
+                    <h3 class="project-title">DIA D</h3>
+                    <span class="project-year">2026</span>
+                </div>
+                <div class="project-tags">
+                    <span class="project-tag">Graphic Design</span>
+                    <span class="project-tag">Event</span>
+                </div>
+                <p class="project-desc">
+                    Visual identity and communication system for a one-day event — including posters, banners, booklets, and digital assets.
+                </p>
+            </div>
+        </div>
+
+        <!-- Project 3: CAPSLOCK -->
+        <div class="project-card">
+            <img src="assets/ex1-capslock.png" alt="CAPSLOCK typography" loading="lazy">
+            <div class="project-info">
+                <div class="project-meta">
+                    <h3 class="project-title">CAPSLOCK</h3>
+                    <span class="project-year">2025</span>
+                </div>
+                <div class="project-tags">
+                    <span class="project-tag">Typography</span>
+                    <span class="project-tag">Poster</span>
+                </div>
+                <p class="project-desc">
+                    A typographic exploration using the CAPSLOCK concept — experimenting with letterforms, hierarchy, and visual tension.
+                </p>
+            </div>
+        </div>
+
+        <!-- Project 4: ONU Art. 7 -->
+        <div class="project-card">
+            <img src="assets/ex2-onu.png" alt="ONU Article 7 project" loading="lazy">
+            <div class="project-info">
+                <div class="project-meta">
+                    <h3 class="project-title">ONU — Art. 7</h3>
+                    <span class="project-year">2026</span>
+                </div>
+                <div class="project-tags">
+                    <span class="project-tag">Symbolism</span>
+                    <span class="project-tag">Visual System</span>
+                </div>
+                <p class="project-desc">
+                    A visual interpretation of UN Article 7 through floral symbols — exploring human rights, dignity, and equality through organic forms.
+                </p>
+            </div>
+        </div>
+
+        <!-- Project 5: Out of Body Vinyl -->
+        <div class="project-card">
+            <img src="assets/p1-vinyl.png" alt="Out of Body vinyl mockup" loading="lazy">
+            <div class="project-info">
+                <div class="project-meta">
+                    <h3 class="project-title">Out of Body — LP Package</h3>
+                    <span class="project-year">2025</span>
+                </div>
+                <div class="project-tags">
+                    <span class="project-tag">Packaging</span>
+                    <span class="project-tag">Music</span>
+                </div>
+                <p class="project-desc">
+                    LP and CD packaging design complementing the zine — a cohesive visual language across formats and materials.
+                </p>
+            </div>
+        </div>
+
+        <!-- Project 6: DIA D Booklet -->
+        <div class="project-card">
+            <img src="assets/p2-booklet.png" alt="DIA D booklet" loading="lazy">
+            <div class="project-info">
+                <div class="project-meta">
+                    <h3 class="project-title">DIA D — Publication</h3>
+                    <span class="project-year">2026</span>
+                </div>
+                <div class="project-tags">
+                    <span class="project-tag">Editorial</span>
+                    <span class="project-tag">Booklet</span>
+                </div>
+                <p class="project-desc">
+                    A printed booklet documenting the DIA D event program, speakers, and schedule — designed for clarity and visual continuity.
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="section-title" id="about">About</div>
+    <div style="max-width: 1100px; margin: 0 auto; padding: 0 24px 80px;">
+        <p style="font-size: 15px; color: var(--text-dim); max-width: 600px; line-height: 1.7;">
+            I'm a design student at FBAUL — Faculdade de Belas-Artes da Universidade de Lisboa — currently in my second year of Communication Design (DCIV). My work spans editorial design, typography, visual identity, and event communication. I'm passionate about creating meaningful visual systems that balance structure, emotion, and clarity.
+        </p>
+    </div>
+
+    <footer>
+        <a href="mailto:margarida.c.m.vieira@gmail.com">Email</a>
+        <a href="https://www.linkedin.com/in/margaridavieira" target="_blank">LinkedIn</a>
+        <a href="https://github.com/margaridalucasvieira" target="_blank">GitHub</a>
+    </footer>
+
+    <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+    <script>
+        // Show back to top button
+        window.addEventListener('scroll', () => {
+            document.getElementById('backToTop').classList.toggle('visible', window.scrollY > 400);
+        });
+    </script>
+
 </body>
 </html>
